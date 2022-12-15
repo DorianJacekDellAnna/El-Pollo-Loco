@@ -31,11 +31,30 @@ class Endboss extends movableObjects {
         'img/4_enemie_boss_chicken/1_walk/G4.png',
     ];
 
+    IMAGES_HURT = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png'
+    ];
+
+    IMAGES_ATTACK = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+    ];
+
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_DIEING);
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_ATTACK)
         this.x = 1000; //2000
         this.animate();
     }
@@ -58,11 +77,36 @@ class Endboss extends movableObjects {
             }
 
             else if (i > 8 && hadFirstContact) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft();
+                if (world.character.x < this.x) {
+                    this.otherDirection = false;
+                    this.moveLeft();
+                }
+
+                if (world.character.x > this.x) {
+                    this.otherDirection = true;
+                    this.moveRight();
+                }
             }
             i++;
         }, 200);
+
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DIEING)
+            }
+
+            else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+
+            else if (this.x - world.character.x < 50 && this.x - world.character.x > 0) {
+                this.playAnimation(this.IMAGES_ATTACK);
+            }
+
+            else if (i > 8 && hadFirstContact) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 100);
     }
 
     DisplayDeadEndbossAndEndGame() {

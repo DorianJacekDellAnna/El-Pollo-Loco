@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameStarted = true;
+let fullScreen = false;
 //let movableObjects = new movableObjects();
 
 function init() {
@@ -36,7 +37,13 @@ function endGame() {
     document.getElementById('end-screen').classList.remove('d-none');
     document.getElementById('fullScreen').classList.add('d-none');
     init();
-
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
 }
 
 
@@ -83,37 +90,37 @@ window.addEventListener("keyup", (e) => {
 });
 
 
-function mobileTouchBtn(){
+function mobileTouchBtn() {
     document.getElementById('buttonRight').addEventListener('touchstart', (e) => {
         keyboard.RIGHT = true;
-    }); 
+    });
 
     document.getElementById('buttonRight').addEventListener('touchend', (e) => {
         keyboard.RIGHT = false;
-    }); 
+    });
 
     document.getElementById('buttonLeft').addEventListener('touchstart', (e) => {
         keyboard.LEFT = true;
-    }); 
+    });
 
     document.getElementById('buttonLeft').addEventListener('touchend', (e) => {
         keyboard.LEFT = false;
-    }); 
+    });
 
     document.getElementById('buttonJump').addEventListener('touchstart', (e) => {
         keyboard.SPACE = true;
-    }); 
+    });
 
     document.getElementById('buttonJump').addEventListener('touchend', (e) => {
-        keyboard.SPACE= false;
-    }); 
+        keyboard.SPACE = false;
+    });
 
     document.getElementById('buttonThrow').addEventListener('touchstart', (e) => {
         keyboard.D = true;
-    }); 
+    });
 
     document.getElementById('buttonThrow').addEventListener('touchend', (e) => {
-        keyboard.D= false;
-    }); 
+        keyboard.D = false;
+    });
 
 }

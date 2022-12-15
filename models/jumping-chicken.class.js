@@ -40,15 +40,23 @@ class JumpingChicken extends movableObjects {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 100);
-        setInterval(() => { 
+        setInterval(() => {
             if (!this.isDead()) {
-                this.moveLeft(); 
+                if (world.character.x < this.x) {
+                    this.otherDirection = false;
+                    this.moveLeft();
+                }
+
+                if (world.character.x > this.x) {
+                    this.otherDirection = true;
+                    this.moveRight();
+                }
             }
-         }, 1000 / 60);
+        }, 1000 / 60);
         setInterval(() => {
             if (!this.isAboveGround() && !this.isDead()) {
                 this.jump();
-            } 
+            }
         }, Math.random() * 6000);
     }
 }

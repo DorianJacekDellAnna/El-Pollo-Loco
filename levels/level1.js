@@ -4,13 +4,13 @@ function initLevel() {
 level1 = new level(
 
     enemies = [
-        new Chicken(),
+       /* new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken(),
         new JumpingChicken(),
         new JumpingChicken(),
-        new JumpingChicken(),
+        new JumpingChicken(),*/
     ],
 
     endboss = [

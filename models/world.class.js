@@ -95,6 +95,7 @@ class World {
                     console.log('bottle hit');
                     this.level.endboss.forEach(endboss => {
                         endboss.hit();
+                        this.throwableObject.splice(bottle)
                         console.log(endboss.energy);
                     });
                     

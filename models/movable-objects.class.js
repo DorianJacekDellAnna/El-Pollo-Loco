@@ -47,7 +47,7 @@ class movableObjects extends DrawableObjects {
         return this.energy == 0
     }
 
-    endbossIsDead (){
+    endbossIsDead() {
         return this.endboss.energy == 0
     }
 

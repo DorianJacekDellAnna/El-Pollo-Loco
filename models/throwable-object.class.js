@@ -16,7 +16,13 @@ IMAGES_THROWING = [
         this.speedY = 10;
         this.applyGravity();
         setInterval(() => {
-            this.x += 10;
+            if (!world.character.otherDirection) {
+                this.x += 10;
+            }
+
+            if (world.character.otherDirection) {
+                this.x -= 10;
+            }
         }, 25);
     }
 

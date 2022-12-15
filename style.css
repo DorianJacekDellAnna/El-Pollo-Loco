@@ -1,8 +1,10 @@
 body {
+    background-image: url(img/12_background/desert_background.jpg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 canvas {
@@ -48,9 +50,44 @@ canvas {
     height: 50px;
 }
 
+.rotade {
+    position: absolute;
+    top: 300px;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+.rotade img {
+    height: 200px;
+    width: 200px;
+}
+
+.game {
+    visibility: visible;
+}
+
 @media only screen and (max-width: 480px) {
     .control-buttons input {
         visibility: visible;
+    }
+
+    .rotade {
+        visibility: visible;
+    }
+
+    .game {
+        visibility: hidden;
+    }
+
+    .wrapper {
+        position: absolute;
+        bottom: 50px;
+    }
+
+    canvas {
+        height: 500px;
+        width: 500px;
     }
 }
 
@@ -58,9 +95,13 @@ canvas {
     .control-buttons input {
         visibility: visible;
     }
+
+    .wrapper {
+        position: absolute;
+        top: 10px;
+        left: 32px;
+    }
 }
-
-
 
 
 /* Design für Start Game / Full Screen und / Restart Game */

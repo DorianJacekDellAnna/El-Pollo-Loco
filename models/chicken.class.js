@@ -25,7 +25,15 @@ class Chicken extends movableObjects {
     animate() {
         setInterval(() => {
             if (!this.isDead()) {
-                this.moveLeft();
+                if (world.character.x < this.x) {
+                    this.otherDirection = false;
+                    this.moveLeft();
+                }
+
+                if (world.character.x > this.x) {
+                    this.otherDirection = true;
+                    this.moveRight();
+                }
             }
         }, 1000 / 60);
 
