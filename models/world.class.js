@@ -36,24 +36,23 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.bottleStatusBar.percentage > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.bottleStatusBar.percentage -= 20;
             this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage);
-            // console.log(this.bottleStatusBar.percentage)
         }
     }
 
     checkCollisions() {
-       this.characterGetHit();
-       this.characterPickCoin();
-       this.characterPickBottle();
-       this.endbossBottleHit();
-       this.characterGetHitByEndboss();
+        this.characterGetHit();
+        this.characterPickCoin();
+        this.characterPickBottle();
+        this.endbossBottleHit();
+        this.characterGetHitByEndboss();
     }
 
-    characterGetHit(){
-        return  this.level.enemies.forEach((enemy) => {
+    characterGetHit() {
+        return this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
                 this.character.hit();
                 console.log('collision with Character, new energy:', this.character.energy);
@@ -66,7 +65,7 @@ class World {
         });
     }
 
-    characterPickCoin(){
+    characterPickCoin() {
         return this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 console.log('coin collected');
@@ -77,8 +76,8 @@ class World {
         });
     }
 
-    characterPickBottle(){
-        return  this.level.bottles.forEach((bottle) => {
+    characterPickBottle() {
+        return this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 console.log('bottle collected');
                 this.level.bottles.splice(bottle, 1)
@@ -88,8 +87,8 @@ class World {
         });
     }
 
-    endbossBottleHit (){
-        return  this.throwableObject.forEach((bottle) => {
+    endbossBottleHit() {
+        return this.throwableObject.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(bottle)) {
                     console.log('bottle hit');
@@ -98,14 +97,14 @@ class World {
                         this.throwableObject.splice(bottle)
                         console.log(endboss.energy);
                     });
-                    
+
                 }
             })
         });
     }
 
-    characterGetHitByEndboss (){
-        return  this.level.endboss.forEach((endboss) => {
+    characterGetHitByEndboss() {
+        return this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
                 console.log('collision with Character, new energy:', this.character.energy);
@@ -133,7 +132,7 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         let self = this
-        
+
         requestAnimationFrame(
             function () {
                 self.draw();
@@ -162,10 +161,6 @@ class World {
             this.flipImageBack(mo);
         }
 
-    }
-
-    drawFrames() {
-        return 
     }
 
     flipImage(mo) {
