@@ -36,14 +36,6 @@ function endGame() {
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen').classList.remove('d-none');
     document.getElementById('fullScreen').classList.add('d-none');
-    init();
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-            document.msExitFullscreen();
-        }
 }
 
 

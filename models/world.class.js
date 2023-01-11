@@ -12,6 +12,10 @@ class World {
     throwableObject = [];
     flyingBottles = new ThrowableObject();
     jumpingChicken = new JumpingChicken();
+    canThrow = true;
+    bottleHitSound = new Audio('audio/glass_break.mp3');
+    bottleThrow = new Audio('audio/throw.mp3')
+    chickenSqueeze = new Audio ('audio/squeez.mp3')
 
 
     constructor(canvas, keyboard) {
@@ -35,11 +39,18 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.bottleStatusBar.percentage > 0) {
+        if (this.keyboard.D && this.bottleStatusBar.percentage > 0 && this.canThrow) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.bottleStatusBar.percentage -= 20;
             this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage);
+            this.canThrow = false;
+            this.bottleThrow.play();
+            setTimeout(()=>{
+                console.log('end cooldown')
+                this.canThrow = true;
+                console.log('end cooldown', this.canThrow)
+            }, 1000);
         }
     }
 
@@ -61,15 +72,16 @@ class World {
 
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.energy = 0;
+                this.chickenSqueeze.play();
             }
         });
     }
 
     characterPickCoin() {
         return this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
+            if (this.character.isCollidingCharacterCoinBottle(coin)) {
                 console.log('coin collected');
-                this.level.coins.splice(coin, 1)
+                this.level.coins.splice(coins.indexOf(coin), 1)
                 this.coinStatusBar.percentage += 20;
                 this.coinStatusBar.setPercentage(this.coinStatusBar.percentage)
             }
@@ -78,9 +90,9 @@ class World {
 
     characterPickBottle() {
         return this.level.bottles.forEach((bottle) => {
-            if (this.character.isColliding(bottle)) {
+            if (this.character.isCollidingCharacterCoinBottle(bottle)) {
                 console.log('bottle collected');
-                this.level.bottles.splice(bottle, 1)
+                this.level.bottles.splice(bottles.indexOf(bottle), 1)
                 this.bottleStatusBar.percentage += 20;
                 this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage)
             }
@@ -96,6 +108,7 @@ class World {
                         endboss.hit();
                         this.throwableObject.splice(bottle)
                         console.log(endboss.energy);
+                        this.bottleHitSound.play()
                     });
 
                 }
@@ -118,11 +131,7 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectToMap(this.level.backgroundObjects);
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.coinStatusBar);
-        this.addToMap(this.bottleStatusBar);
-        this.ctx.translate(this.camera_x, 0);
+        
         this.addObjectToMap(this.level.clouds);
         this.addObjectToMap(this.level.enemies);
         this.addObjectToMap(this.level.endboss)
@@ -130,6 +139,11 @@ class World {
         this.addObjectToMap(this.level.bottles);
         this.addObjectToMap(this.throwableObject);
         this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinStatusBar);
+        this.addToMap(this.bottleStatusBar);
+        this.ctx.translate(this.camera_x, 0);
         this.ctx.translate(-this.camera_x, 0);
         let self = this
 
@@ -151,10 +165,10 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        /*mo.drawFrame(this.ctx);
+        mo.drawFrame(this.ctx);
         mo.drawFrameCoinAndBottle(this.ctx);
         mo.drawFrameThrowableObject(this.ctx);
-        mo.drawFrameCharacter(this.ctx);*/ // Only if you want to see the Hitbox
+        mo.drawFrameCharacter(this.ctx); // Only if you want to see the Hitbox
 
 
         if (mo.otherDirection) {

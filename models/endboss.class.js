@@ -48,6 +48,8 @@ class Endboss extends movableObjects {
         'img/4_enemie_boss_chicken/3_attack/G20.png',
     ];
 
+    enbossAlertSound = new Audio ('audio/endboss_chicken.mp3')
+
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -72,8 +74,9 @@ class Endboss extends movableObjects {
                 hadFirstContact = true;
             }
 
-            else if (i < 8) {
+            else if (i < 8 && hadFirstContact) {
                 this.playAnimation(this.IMAGES_ALERT);
+                this.enbossAlertSound.play();
             }
 
             else if (i > 8 && hadFirstContact) {

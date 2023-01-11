@@ -1,5 +1,5 @@
 class movableObjects extends DrawableObjects {
-    speed = 0.1;
+    speed = 3;
     otherDirection = false;
     speedY = 5;
     acceleration = 1;
@@ -13,7 +13,7 @@ class movableObjects extends DrawableObjects {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+        }, 1000 / 50);
     }
 
     isAboveGround(bottomPosition) {
@@ -31,6 +31,13 @@ class movableObjects extends DrawableObjects {
             this.y + this.height > mo.y &&
             this.x < mo.x &&
             this.y < mo.y + mo.height
+    }
+
+    isCollidingCharacterCoinBottle(mo) {
+        return (this.x + this.width - this.offset.right) > mo.x + mo.offset.left &&
+            this.x + this.offset.left < (mo.x + mo.width - mo.offset.right) &&
+            (this.y + this.height - this.offset.bottom) > mo.y + mo.offset.top &&
+            (this.y + this.offset.top) < (mo.y + mo.height - mo.offset.bottom);
     }
 
     hit() {

@@ -8,6 +8,12 @@ level1 = new level(
         new Chicken(),
         new Chicken(),
         new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
         new JumpingChicken(),
         new JumpingChicken(),
         new JumpingChicken(),*/
