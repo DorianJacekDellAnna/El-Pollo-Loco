@@ -1,33 +1,50 @@
 let level1;
 function initLevel() {
 
-level1 = new level(
+    level1 = new level(
 
-    enemies = [
-       /* new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new JumpingChicken(),
-        new JumpingChicken(),
-        new JumpingChicken(),
-        new JumpingChicken(),
-        new JumpingChicken(),
-        new JumpingChicken(),*/
-    ],
+        createLevel1Enemies(),
+        createLevel1Endboss(),
+        createLevel1Clouds(),
+        createLevel1Background(),
+        createLevel1Coins(),
+        createLevel1Bottles(),
 
-    endboss = [
+    )
+}
+
+function createLevel1Enemies() {
+    return enemies = [
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+        new JumpingChicken(),
+    ]
+}
+
+function createLevel1Endboss() {
+    return endboss = [
         new Endboss()
-    ],
+    ]
+}
 
-    clouds = [
+function createLevel1Clouds() {
+    return clouds = [
         new Cloud()
-    ],
+    ]
+}
 
-    backgroundObjects = [
+function createLevel1Background() {
+    return backgroundObjects = [
 
         new BackgroundObjects('img/5_background/layers/air.png', -719),
         new BackgroundObjects('img/5_background/layers/3_third_layer/2.png', -719),
@@ -49,22 +66,25 @@ level1 = new level(
         new BackgroundObjects('img/5_background/layers/3_third_layer/2.png', 719 * 3),
         new BackgroundObjects('img/5_background/layers/2_second_layer/2.png', 719 * 3),
         new BackgroundObjects('img/5_background/layers/1_first_layer/2.png', 719 * 3),
-    ],
+    ]
+}
 
-    coins = [
+function createLevel1Coins() {
+    return coins = [
         new Coin(),
         new Coin(),
         new Coin(),
         new Coin(),
         new Coin()
-    ],
-   
-    bottles = [
+    ]
+}
+
+function createLevel1Bottles() {
+    return bottles = [
         new Bottle(),
         new Bottle(),
         new Bottle(),
         new Bottle(),
         new Bottle()
-    ],
-)
+    ]
 }

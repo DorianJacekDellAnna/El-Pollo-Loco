@@ -13,9 +13,12 @@ class World {
     flyingBottles = new ThrowableObject();
     jumpingChicken = new JumpingChicken();
     canThrow = true;
+    characterFallDown = false;
+    pickCoin = new Audio('audio/coinPick.mp3')
+    pickBottle = new Audio('audio/bottlePick.mp3')
     bottleHitSound = new Audio('audio/glass_break.mp3');
     bottleThrow = new Audio('audio/throw.mp3')
-    chickenSqueeze = new Audio ('audio/squeez.mp3')
+    chickenSqueeze = new Audio('audio/squeez.mp3')
 
 
     constructor(canvas, keyboard) {
@@ -32,25 +35,44 @@ class World {
     }
 
     run() {
-        setInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-        }, 1000 / 10);
+        this.playInterval = setStoppableInterval(this.check.bind(this), 100)
+    }
+
+    check(){
+        this.checkCollisions();
+        this.checkThrowObjects();
+        this.checkIfCharacterJumps();
+    }
+
+    characterCanThrow(){
+        return this.keyboard.D && this.bottleStatusBar.percentage > 0 && this.canThrow
+    }
+
+    chickenCanAttack(){
+        return !this.character.isAboveGround() && !enemy.isDead()
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.bottleStatusBar.percentage > 0 && this.canThrow) {
+        if (this.characterCanThrow()) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObject.push(bottle);
             this.bottleStatusBar.percentage -= 20;
             this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage);
             this.canThrow = false;
             this.bottleThrow.play();
-            setTimeout(()=>{
-                console.log('end cooldown')
+            setTimeout(() => {
                 this.canThrow = true;
-                console.log('end cooldown', this.canThrow)
             }, 1000);
+        }
+    }
+
+    checkIfCharacterJumps() {
+        if (this.character.y < -40) {
+            this.characterFallDown = true;
+        }
+
+        if (this.character.y == 166) {
+            this.characterFallDown = false;
         }
     }
 
@@ -66,11 +88,10 @@ class World {
         return this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
                 this.character.hit();
-                console.log('collision with Character, new energy:', this.character.energy);
                 this.statusBar.setPercentage(this.character.energy)
             }
 
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.characterFallDown) {
                 enemy.energy = 0;
                 this.chickenSqueeze.play();
             }
@@ -80,9 +101,9 @@ class World {
     characterPickCoin() {
         return this.level.coins.forEach((coin) => {
             if (this.character.isCollidingCharacterCoinBottle(coin)) {
-                console.log('coin collected');
                 this.level.coins.splice(coins.indexOf(coin), 1)
-                this.coinStatusBar.percentage += 20;
+                this.pickCoin.play();
+                this.coinStatusBar.percentagcccde += 20;
                 this.coinStatusBar.setPercentage(this.coinStatusBar.percentage)
             }
         });
@@ -91,8 +112,8 @@ class World {
     characterPickBottle() {
         return this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingCharacterCoinBottle(bottle)) {
-                console.log('bottle collected');
                 this.level.bottles.splice(bottles.indexOf(bottle), 1)
+                this.pickBottle.play();
                 this.bottleStatusBar.percentage += 20;
                 this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage)
             }
@@ -103,11 +124,9 @@ class World {
         return this.throwableObject.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(bottle)) {
-                    console.log('bottle hit');
                     this.level.endboss.forEach(endboss => {
                         endboss.hit();
                         this.throwableObject.splice(bottle)
-                        console.log(endboss.energy);
                         this.bottleHitSound.play()
                     });
 
@@ -120,7 +139,6 @@ class World {
         return this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
-                console.log('collision with Character, new energy:', this.character.energy);
                 this.statusBar.setPercentage(this.character.energy)
             }
         });
@@ -131,7 +149,7 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectToMap(this.level.backgroundObjects);
-        
+
         this.addObjectToMap(this.level.clouds);
         this.addObjectToMap(this.level.enemies);
         this.addObjectToMap(this.level.endboss)
@@ -165,10 +183,10 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        mo.drawFrameCoinAndBottle(this.ctx);
-        mo.drawFrameThrowableObject(this.ctx);
-        mo.drawFrameCharacter(this.ctx); // Only if you want to see the Hitbox
+        /*  mo.drawFrame(this.ctx);
+          mo.drawFrameCoinAndBottle(this.ctx);
+          mo.drawFrameThrowableObject(this.ctx);
+          mo.drawFrameCharacter(this.ctx); */// Only if you want to see the Hitbox
 
 
         if (mo.otherDirection) {

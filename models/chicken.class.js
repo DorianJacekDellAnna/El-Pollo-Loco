@@ -18,32 +18,35 @@ class Chicken extends movableObjects {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGE_DEAD);
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 700 + Math.random() * 1000; // Zahl zwischen 700 und 1700 
+        this.x = 1000 + Math.random() * 1000; // Zahl zwischen 1000 und 1000 
         this.animate();
     }
 
     animate() {
-        setInterval(() => {
-            if (!this.isDead()) {
-                if (world.character.x < this.x) {
-                    this.otherDirection = false;
-                    this.moveLeft();
-                }
+        this.playInterval = setStoppableInterval(this.chickenMovement.bind(this), 1000 / 60)
+        this.playInterval = setStoppableInterval(this.chickenAnimation.bind(this), 100)
+    }
 
-                if (world.character.x > this.x) {
-                    this.otherDirection = true;
-                    this.moveRight();
-                }
+    chickenMovement(){
+        if (!this.isDead()) {
+            if (this.characterAhead()) {
+                this.otherDirection = false;
+                this.moveLeft();
             }
-        }, 1000 / 60);
 
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGE_DEAD);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
+            if (this.characterBehind()) {
+                this.otherDirection = true;
+                this.moveRight();
             }
-        }, 100);
+        }
+    }
+
+    chickenAnimation(){
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGE_DEAD);
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
     }
 }
 

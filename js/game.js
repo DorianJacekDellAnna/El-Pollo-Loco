@@ -3,11 +3,17 @@ let world;
 let keyboard = new Keyboard();
 let gameStarted = true;
 let fullScreen = false;
+let interlalIds = [];
 //let movableObjects = new movableObjects();
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+}
+
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    interlalIds.push(id)
 }
 
 function goFullScreen() {
@@ -36,7 +42,12 @@ function endGame() {
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen').classList.remove('d-none');
     document.getElementById('fullScreen').classList.add('d-none');
+    clearAllIntervals();
 }
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }
 
 
 window.addEventListener("keydown", (e) => {

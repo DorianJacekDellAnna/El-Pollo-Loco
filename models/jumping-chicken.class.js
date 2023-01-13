@@ -18,7 +18,7 @@ class JumpingChicken extends movableObjects {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 700 + Math.random() * 1000; // Zahl zwischen 700 und 1700 
+        this.x = 1000 + Math.random() * 1000; // Zahl zwischen 1000 und 1000 
         this.applyGravity();
         this.animate();
     }
@@ -33,30 +33,36 @@ class JumpingChicken extends movableObjects {
     }
 
     animate() {
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 100);
-        setInterval(() => {
-            if (!this.isDead()) {
-                if (world.character.x < this.x) {
-                    this.otherDirection = false;
-                    this.moveLeft();
-                }
+        this.playInterval = setStoppableInterval(this.jumpingChickenAnimations.bind(this), 100)
+        this.playInterval = setStoppableInterval(this.jumpingChickenMovement.bind(this), 1000 / 60)
+        this.playInterval = setStoppableInterval(this.jumpingChickenJump.bind(this), Math.random() * 6000)
+    }
 
-                if (world.character.x > this.x) {
-                    this.otherDirection = true;
-                    this.moveRight();
-                }
+    jumpingChickenAnimations(){
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+    }
+
+    jumpingChickenMovement(){
+        if (!this.isDead()) {
+            if (this.characterAhead()) {
+                this.otherDirection = false;
+                this.moveLeft();
             }
-        }, 1000 / 60);
-        setInterval(() => {
-            if (!this.isAboveGround() && !this.isDead()) {
-                this.jump();
+
+            if (this.characterBehind()) {
+                this.otherDirection = true;
+                this.moveRight();
             }
-        }, Math.random() * 6000);
+        }
+    }
+
+    jumpingChickenJump(){
+        if (!this.isAboveGround() && !this.isDead()) {
+            this.jump();
+        }
     }
 }

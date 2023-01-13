@@ -1,4 +1,5 @@
 class movableObjects extends DrawableObjects {
+  
     speed = 3;
     otherDirection = false;
     speedY = 5;
@@ -8,12 +9,26 @@ class movableObjects extends DrawableObjects {
     lastHit = 0;
 
     applyGravity(bottomPosition) {
-        setInterval(() => {
-            if (this.isAboveGround(bottomPosition) || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-        }, 1000 / 50);
+        this.playInterval = setStoppableInterval(this.gravityApplyer.bind(this), 1000 / 50) 
+    }
+
+    gravityApplyer(){
+        if (this.moIsAboveGround()) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+    }
+
+    moIsAboveGround(){
+        return this.isAboveGround(this.bottomPosition) || this.speedY > 0
+    }
+
+    characterAhead(){
+        return world.character.x < this.x
+    }
+
+    characterBehind(){
+        return world.character.x > this.x
     }
 
     isAboveGround(bottomPosition) {

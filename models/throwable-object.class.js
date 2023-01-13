@@ -23,36 +23,48 @@ class ThrowableObject extends movableObjects {
    bottleAboveGround = this.y < 400;
 
     throw() {
+        this.playInterval = setStoppableInterval(this.throwableObjectPhysics.bind(this), 1000 / 50) 
+        this.playInterval = setStoppableInterval(this.throwableObjectFlightDirection.bind(this), 25) 
+        this.playInterval = setStoppableInterval(this.throwableObjectAnimations.bind(this), 50) 
         this.speedY = 10;
-        setInterval(() => {
-
-            if (this.y < 400) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-
-        }, 1000 / 50);
-        
-        setInterval(() => {
-
-            if (!this.direction && this.y < 400) {
-                this.x += 10;
-            }
-
-            if (this.direction && this.y < 400) {
-                this.x -= 10;
-            }
-
-        }, 25);
-
-        setInterval(() => {
-
-            if (this.y < 400) {
-                this.playAnimation(this.IMAGES_THROWING);
-            }
-
-        }, 50);
     }
+
+    throwableObjectPhysics(){
+        if (this.bottleAboveGround) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+    }
+
+    throwableObjectFlightDirection(){
+        if (this.bottleDirectionRight()) {
+            this.x += 10;
+        }
+
+        if (this.bottleDirectionLeft()) {
+            this.x -= 10;
+        }
+    }
+
+    throwableObjectAnimations(){
+        if (this.bottleAboveGround) {
+            this.playAnimation(this.IMAGES_THROWING);
+        }
+    }
+
+    bottleAboveGround(){
+        return this.y < 400
+    }
+
+    bottleDirectionRight(){
+        return !this.direction && this.bottleAboveGround
+    }
+
+    bottleDirectionLeft(){
+        return this.direction && this.bottleAboveGround
+    }
+
+
 
 
 }
