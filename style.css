@@ -5,6 +5,8 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 canvas {
@@ -66,6 +68,7 @@ canvas {
 .game {
     visibility: visible;
 }
+
 .manual_button {
     display: flex;
     flex-direction: row-reverse;
@@ -87,6 +90,11 @@ canvas {
 }
 
 @media only screen and (max-width: 480px) {
+    canvas {
+        width: 100vh;
+        bottom: 0px;
+    }
+
     .control-buttons input {
         visibility: visible;
     }
@@ -111,6 +119,28 @@ canvas {
 }
 
 @media only screen and (max-height: 720px) {
+    canvas {
+        height: 100vh;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+    }
+
+    .mobile-buttons {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+        z-index: 999; 
+    }
+
     .control-buttons input {
         visibility: visible;
     }
@@ -119,6 +149,10 @@ canvas {
         position: absolute;
         top: 10px;
         left: 32px;
+    }
+
+    #fullScreen {
+        display: none;
     }
 }
 

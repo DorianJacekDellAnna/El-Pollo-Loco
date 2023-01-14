@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let gameStarted = true;
 let fullScreen = false;
+let backgroundMusic = new Audio('audio/backgroundMusic.mp3')
 let interlalIds = [];
 //let movableObjects = new movableObjects();
 
@@ -32,6 +33,7 @@ function startGame() {
     document.getElementById('fullScreen').classList.remove('d-none');
     initLevel();
     init();
+    backgroundMusic.play();
 }
 
 function reloadGame() {

@@ -64,8 +64,8 @@ class Character extends movableObjects {
     ];
     offset = {
         top: 120,
-        left: 50, //70
-        right: 50, //50
+        left: 20, //70
+        right: 20, //50
         bottom: 20 //20
     };
     world;
@@ -110,6 +110,7 @@ class Character extends movableObjects {
 
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
+            this.jumpSound.volume = 0.5;
             this.jumpSound.play();
         }
 

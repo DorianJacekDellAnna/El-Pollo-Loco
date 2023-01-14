@@ -17,8 +17,8 @@ class World {
     pickCoin = new Audio('audio/coinPick.mp3')
     pickBottle = new Audio('audio/bottlePick.mp3')
     bottleHitSound = new Audio('audio/glass_break.mp3');
-    bottleThrow = new Audio('audio/throw.mp3')
-    chickenSqueeze = new Audio('audio/squeez.mp3')
+    bottleThrow = new Audio('audio/throw.mp3');
+    chickenSqueeze = new Audio('audio/squeez.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -93,6 +93,7 @@ class World {
 
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.characterFallDown) {
                 enemy.energy = 0;
+                this.chickenSqueeze.volume = 0.1;
                 this.chickenSqueeze.play();
             }
         });
@@ -183,7 +184,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        /*  mo.drawFrame(this.ctx);
+         /* mo.drawFrame(this.ctx);
           mo.drawFrameCoinAndBottle(this.ctx);
           mo.drawFrameThrowableObject(this.ctx);
           mo.drawFrameCharacter(this.ctx); */// Only if you want to see the Hitbox
