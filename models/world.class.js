@@ -35,7 +35,7 @@ class World {
     }
 
     run() {
-        this.playInterval = setStoppableInterval(this.check.bind(this), 100)
+        this.playInterval = setStoppableInterval(this.check.bind(this), 10)
     }
 
     check(){
@@ -126,6 +126,7 @@ class World {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(bottle)) {
                     this.level.endboss.forEach(endboss => {
+                        endboss.energy -= 5;
                         endboss.hit();
                         this.throwableObject.splice(bottle)
                         this.bottleHitSound.play()

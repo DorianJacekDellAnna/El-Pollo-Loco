@@ -136,6 +136,7 @@ class Endboss extends movableObjects {
 
     DisplayDeadEndbossAndEndGame() {
         if (!this.deathSoundPlayed) {
+            this.endbossDead.volume = 0.1;
             this.endbossDead.play();
             this.deathSoundPlayed = true;
         }
