@@ -3,7 +3,7 @@ class Character extends movableObjects {
     height = 280;
     y = 10; // 155
     speed = 8;
-    i=0;
+    i = 0;
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -86,16 +86,17 @@ class Character extends movableObjects {
         this.applyGravity();
         this.animate();
     }
-
-
-
-
+    /**
+     * This function strats the animations and the movement from the character
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.characterMovement.bind(this), 1000 / 60)
         this.playInterval = setStoppableInterval(this.characterAnimation.bind(this), 100)
     }
-
-    characterMovement(){
+    /**
+     * This function is responsible for the movement for the character
+     */
+    characterMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.otherDirection = false;
             this.moveRight();
@@ -116,8 +117,10 @@ class Character extends movableObjects {
 
         this.world.camera_x = -this.x + 100;
     }
-
-    characterAnimation(){
+    /**
+     * This function crates the Animations for the character
+     */
+    characterAnimation() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
             endGame();
@@ -143,8 +146,11 @@ class Character extends movableObjects {
         }
         this.i++;
     }
-
-    characterSleeps(){
+/**
+ * This function checks if the character sleeps
+ * @returns the i value in idle
+ */
+    characterSleeps() {
         return this.i > 30
     }
 }

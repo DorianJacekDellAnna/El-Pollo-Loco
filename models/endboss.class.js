@@ -49,7 +49,7 @@ class Endboss extends movableObjects {
         'img/4_enemie_boss_chicken/3_attack/G19.png',
         'img/4_enemie_boss_chicken/3_attack/G20.png',
     ];
-    
+
     enbossAlertSound = new Audio('audio/endboss_chicken.mp3');
     endbossHurt = new Audio('audio/endbossHurt.mp3');
     endbossDead = new Audio('audio/endbossDead.mp3');
@@ -64,12 +64,16 @@ class Endboss extends movableObjects {
         this.x = 2000; //2000
         this.animate();
     }
-
+    /**
+     * This function strats the animations and the movement from the endboss
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.enbossMovement.bind(this), 200)
         this.playInterval = setStoppableInterval(this.endbossAnimations.bind(this), 100)
     }
-    
+    /**
+     * This function is responsible for the movement for the endboss 
+     */
     enbossMovement() {
         if (this.isDead()) {
             this.DisplayDeadEndbossAndEndGame();
@@ -98,7 +102,9 @@ class Endboss extends movableObjects {
         }
         this.i++;
     }
-
+    /**
+     * This function crates the Animations for the jumping chicken 
+     */
     endbossAnimations() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DIEING)
@@ -117,23 +123,37 @@ class Endboss extends movableObjects {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
-
-    characterFirstContact(){
+    /**
+     * This function detects the first contact from the character and the endboss
+     * @returns the condition for this event 
+     */
+    characterFirstContact() {
         return world.character.x > 1600 && !this.hadFirstContact
     }
-
-    endbossIsAlert(){
+    /**
+     * This function returns the endboss Alern condition 
+     * @returns the condition for endboss Alert
+     */
+    endbossIsAlert() {
         return this.i < 8 && this.hadFirstContact
     }
-
-    characterHadFirstContact(){
+    /**
+     * This function checks if the character and the endboss had their first contact 
+     * @returns the condition for this event 
+     */
+    characterHadFirstContact() {
         return this.i > 8 && this.hadFirstContact
     }
-
-    endbossCanAttack(){
+    /**
+     * This function checks if the endboss can attack 
+     * @returns the condition for this event 
+     */
+    endbossCanAttack() {
         return this.x - world.character.x < 50 && this.x - world.character.x > 0
     }
-
+    /**
+     * This function ends the game after the endboss dies 
+     */
     DisplayDeadEndbossAndEndGame() {
         if (!this.deathSoundPlayed) {
             this.endbossDead.volume = 0.1;
@@ -141,6 +161,6 @@ class Endboss extends movableObjects {
             this.deathSoundPlayed = true;
         }
         this.playAnimation(this.IMAGES_DIEING);
-        setTimeout(() => {endGame();}, 3000);
+        setTimeout(() => { endGame(); }, 3000);
     }
 }

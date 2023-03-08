@@ -20,23 +20,29 @@ class ThrowableObject extends movableObjects {
         this.throw();
     }
 
-   bottleAboveGround = this.y < 400;
-
+    bottleAboveGround = this.y < 400;
+    /**
+     * This function is responsible for the bottle throw
+     */
     throw() {
-        this.playInterval = setStoppableInterval(this.throwableObjectPhysics.bind(this), 1000 / 50) 
-        this.playInterval = setStoppableInterval(this.throwableObjectFlightDirection.bind(this), 25) 
-        this.playInterval = setStoppableInterval(this.throwableObjectAnimations.bind(this), 50) 
+        this.playInterval = setStoppableInterval(this.throwableObjectPhysics.bind(this), 1000 / 50)
+        this.playInterval = setStoppableInterval(this.throwableObjectFlightDirection.bind(this), 25)
+        this.playInterval = setStoppableInterval(this.throwableObjectAnimations.bind(this), 50)
         this.speedY = 10;
     }
-
-    throwableObjectPhysics(){
+    /**
+     * This finction adds the physics to the bottle 
+     */
+    throwableObjectPhysics() {
         if (this.bottleAboveGround) {
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
         }
     }
-
-    throwableObjectFlightDirection(){
+    /**
+     * This function is for the flight direction of the bottle 
+     */
+    throwableObjectFlightDirection() {
         if (this.bottleDirectionRight()) {
             this.x += 10;
         }
@@ -45,22 +51,33 @@ class ThrowableObject extends movableObjects {
             this.x -= 10;
         }
     }
-
-    throwableObjectAnimations(){
+    /**
+     * This function animates the bottle 
+     */
+    throwableObjectAnimations() {
         if (this.bottleAboveGround) {
             this.playAnimation(this.IMAGES_THROWING);
         }
     }
-
-    bottleAboveGround(){
+    /**
+     * This function checks if the bottle is above the ground 
+     * @returns true or flase 
+     */
+    bottleAboveGround() {
         return this.y < 400
     }
-
-    bottleDirectionRight(){
+    /**
+     * This fuction set the flight direction to right
+     * @returns the condition below 
+     */
+    bottleDirectionRight() {
         return !this.direction && this.bottleAboveGround
     }
-
-    bottleDirectionLeft(){
+    /**
+     * This fuction set the flight direction to right
+     * @returns the condition below 
+     */
+    bottleDirectionLeft() {
         return this.direction && this.bottleAboveGround
     }
 

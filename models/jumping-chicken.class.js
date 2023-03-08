@@ -22,7 +22,10 @@ class JumpingChicken extends movableObjects {
         this.applyGravity();
         this.animate();
     }
-
+    /**
+     * This function checks if the jumping chicken is above the ground 
+     * @returns true or the y-coordinate from the jumping chicken 
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -31,22 +34,28 @@ class JumpingChicken extends movableObjects {
             return this.y < 380;
         }
     }
-
+    /**
+     * This function strats the animations and the movement from the jumping chicken 
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.jumpingChickenAnimations.bind(this), 100)
         this.playInterval = setStoppableInterval(this.jumpingChickenMovement.bind(this), 1000 / 60)
         this.playInterval = setStoppableInterval(this.jumpingChickenJump.bind(this), Math.random() * 6000)
     }
-
-    jumpingChickenAnimations(){
+    /**
+     * This function crates the Animations for the jumping chicken 
+     */
+    jumpingChickenAnimations() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
         } else {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
-
-    jumpingChickenMovement(){
+    /**
+     * This function is responsible for the movement for the jumping chicken 
+     */
+    jumpingChickenMovement() {
         if (!this.isDead()) {
             if (this.characterAhead()) {
                 this.otherDirection = false;
@@ -59,8 +68,10 @@ class JumpingChicken extends movableObjects {
             }
         }
     }
-
-    jumpingChickenJump(){
+    /**
+     * this function let the jumping chicken jumps
+     */
+    jumpingChickenJump() {
         if (!this.isAboveGround() && !this.isDead()) {
             this.jump();
         }

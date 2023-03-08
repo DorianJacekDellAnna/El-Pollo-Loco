@@ -19,13 +19,18 @@ class StatusBar extends DrawableObjects {
         this.height = 60;
         this.setPercentage(100);
     }
-    //set percentage 50 
+    /**
+     * This function set the percentage of the status bar
+     * @param {number} percentage - this is the percentage value 
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
-
+    /**
+     * This function displays the bar based on the percentage value 
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

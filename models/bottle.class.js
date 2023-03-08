@@ -20,13 +20,17 @@ class Bottle extends movableObjects {
         this.x = 200 + Math.random() * 1300; // Zahl zwischen 200 und 700 
         this.animate();
     }
-
+    /**
+     * This function starts the animations of the bottle
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.bottleAnimation.bind(this), 500)
     }
-
-    bottleAnimation(){
-        this.playAnimation(this.IMAGES_BOTTOM);    
+    /**
+     * This function display the animation frame by frame £
+     */
+    bottleAnimation() {
+        this.playAnimation(this.IMAGES_BOTTOM);
     }
 
 

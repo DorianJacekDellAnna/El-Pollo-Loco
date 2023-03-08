@@ -5,18 +5,25 @@ let gameStarted = true;
 let fullScreen = false;
 let backgroundMusic = new Audio('audio/backgroundMusic.mp3')
 let interlalIds = [];
-//let movableObjects = new movableObjects();
-
+/**
+ * This function initializes the game
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
-
+/**
+ * This function pushes all intervalls into a array 
+ * @param {function} fn - This is the function to push
+ * @param {number} time - This the interlal time 
+ */
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     interlalIds.push(id)
 }
-
+/**
+ * This function is responsible for the full screen mode
+ */
 function goFullScreen() {
     var canvas = document.getElementById("canvas");
     if (canvas.requestFullScreen)
@@ -26,7 +33,9 @@ function goFullScreen() {
     else if (canvas.mozRequestFullScreen)
         canvas.mozRequestFullScreen();
 }
-
+/**
+ * This function starts the Game 
+ */
 function startGame() {
     document.getElementById('start-screen').classList.add('d-none');
     document.getElementById('canvas').classList.remove('d-none');
@@ -35,21 +44,27 @@ function startGame() {
     init();
     backgroundMusic.play();
 }
-
+/**
+ * This function restarts the game
+ */
 function reloadGame() {
     location.reload();
 }
-
+/**
+ * This function ends the game
+ */
 function endGame() {
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('end-screen').classList.remove('d-none');
     document.getElementById('fullScreen').classList.add('d-none');
     clearAllIntervals();
 }
-
+/**
+ * This funcion clears all intervals
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
-  }
+}
 
 
 window.addEventListener("keydown", (e) => {

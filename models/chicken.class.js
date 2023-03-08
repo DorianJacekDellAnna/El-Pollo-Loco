@@ -21,12 +21,16 @@ class Chicken extends movableObjects {
         this.x = 1000 + Math.random() * 1000; // Zahl zwischen 1000 und 1000 
         this.animate();
     }
-
+    /**
+     * This function strats the animations and the movement from the chicken 
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.chickenMovement.bind(this), 1000 / 60)
         this.playInterval = setStoppableInterval(this.chickenAnimation.bind(this), 100)
     }
-
+    /**
+     * This function is responsible for the movement for the chicken 
+     */
     chickenMovement(){
         if (!this.isDead()) {
             if (this.characterAhead()) {
@@ -40,7 +44,9 @@ class Chicken extends movableObjects {
             }
         }
     }
-
+    /**
+     * This function crates the Animations for the chicken 
+     */
     chickenAnimation(){
         if (this.isDead()) {
             this.playAnimation(this.IMAGE_DEAD);

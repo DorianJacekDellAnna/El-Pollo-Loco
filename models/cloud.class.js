@@ -11,11 +11,15 @@ class Cloud extends movableObjects {
         this.animate();
         
     }
-
+    /**
+     * This function strats the movement from the clouds
+     */
     animate() {
         this.playInterval = setStoppableInterval(this.cloudMovement.bind(this), 1000/60) 
     }
-
+    /**
+     * This function is responsible for the movement for the clouds 
+     */
     cloudMovement(){
         this.moveLeft();
     }
